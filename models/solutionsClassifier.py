@@ -13,9 +13,17 @@ class SolutionsClassifier:
         pass
     
     def getSolutionsList(self, file):
+        """
+            Método recebe caminho de um arquivo csv e faz a leitura deste,
+            usando como separador o ';'
+        """
         return pd.read_csv(file, sep = ';')
     
     def calculateSolutionsMetrics(self, solutionsList):
+        """
+            Método recebe lista de soluções com suas respectivas métricas
+            e retorna um dicionário com esses dados tratados
+        """
         solutionsMetrics = []
         for i in range(len(solutionsList)):
             solutionMetrics = {}
@@ -33,6 +41,10 @@ class SolutionsClassifier:
         return solutionsMetrics
 
     def defineClientProfile(self, clientId, accountId, itemId, clientSecret):
+        """
+            Função recebe dados do cliente e chama métodos da classe
+            MetricsClassifier para definir e retornar o perfil do cliente
+        """
         clientMetricsClassifier = MetricsClassifier()
         profile = {
             'cashOnEBITDA': clientMetricsClassifier.calculateCashOnEBITDAPosition(accountId, itemId, clientSecret, clientId),
@@ -69,9 +81,6 @@ class SolutionsClassifier:
             solutionsInformation = {
                 'solution': solution['solution'],
                 'euclideanDistance': euclideanDistance,
-                # 'leverage':solution['leverage'],
-                # 'cashProfile': solution['cashOnEBITDA'],
-                # 'incomeVolatility': solution['incomeVolatility'],
             }
             solutions.append(solutionsInformation)
         
@@ -86,8 +95,12 @@ class SolutionsClassifier:
 
     
     def createSolutionsPortfolio(self, bestSolutions):
+        """
+            Método recebe uma lista das melhores soluções para o cliente
+            e, com base na distância euclideana, calcula e normaliza a força
+            do impacto positivo que aquele solução poderia ter no negócio
+        """
         distancesSum = 0
-        # normaliza os dados (coloca no intervalo 0 e 1)
 
         positions = []
         for solution in bestSolutions:
@@ -96,36 +109,38 @@ class SolutionsClassifier:
             
         for i in range(len(bestSolutions)):
             position = positions[i]
+            # normaliza os dados (coloca no intervalo de 0 e 1)
             normalizedPosition = (position - min(positions)) / (max(positions)-min(positions))
             bestSolutions[i]['positiveImpact'] = normalizedPosition
-        
-        # solution['positiveImpact'] = position
         
         return bestSolutions
 
 
     def defineCustomerSolutionsPortfolio(self, clientSecret, clientId, accountId, itemId):
+        """
+            Método recebe dados de Ids do cliente e retorna quais são
+            as melhores soluções, e qual o impacto de cada uma delas,
+            para essa empresa.
+        """
+        
         # define perfil do cliente
         clientProfile = self.defineClientProfile(clientId, accountId, itemId, clientSecret)
 
-
-        # Fazer diretório atual igual a diretório dos dados
+        # faz diretório atual igual a diretório que contém arquivo csv das soluções
         directory = os.getcwd()
-        print(directory)
         if "data" not in directory:
             os.chdir(directory + "/data")
             directory = os.getcwd()
-            print(directory)
         
         # importa e calcula métricas das soluções
         solutionsList = self.getSolutionsList("./solutionsList.csv")
         solutionsMetrics = self.calculateSolutionsMetrics(solutionsList)
 
-        # encontra as x soluções mais próximas da pessoa
+        # encontra as 4 soluções mais próximas da pessoa
         bestSolutions = self.findBestSolutions(clientProfile, solutionsMetrics)
 
-        # prepara o retorno para cliente, com a porcentagem de
-        # proximidade dele para cada solução
+        # prepara o retorno para o cliente, com a porcentagem
+        # de proximidade dele para cada solução
         solutionsPortfolio = self.createSolutionsPortfolio(bestSolutions)
 
         customerSolutionsPortfolio = {
