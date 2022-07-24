@@ -6,6 +6,7 @@ from debts import Debts
 from dataCollector import DataCollector
 sys.path.insert(0, './models/')
 from metricsClassifier import MetricsClassifier
+from solutionsClassifier import SolutionsClassifier
 
 accountId = "4d4f622a-38d6-4991-b340-387492fd22c8"
 itemId = "a4ac3258-e88f-4123-8dc4-a4f72c3da7a7"
@@ -29,7 +30,7 @@ def callsMetrics():
     leverage = clientMetrics.calculateLeverave(clientId, accountId)
     print("leverage = " + str(leverage))
 
-def callsImpact():
+def callsPosition():
     clientMetricsClassifier = MetricsClassifier()
     cashOnEBITDAPosition = clientMetricsClassifier.calculateCashOnEBITDAPosition(accountId, itemId)
     print("cashOnEBITDAPosition = " + str(cashOnEBITDAPosition))
@@ -37,7 +38,14 @@ def callsImpact():
     print("incomeVolatilityPosition = " + str(incomeVolatilityPosition))
     leveragePosition = clientMetricsClassifier.calculateLeveragePosition(clientId, accountId)
     print("leveragePosition = " + str(leveragePosition))
+
+def callsClassifier():
+    clientSolutionsClassifier = SolutionsClassifier()
+
+    solutionsList = clientSolutionsClassifier.defineCustomerSolutionsPortfolio(clientId, accountId, itemId)
+    print("solutionsList")
+    print(solutionsList)
     
 
 if __name__ == '__main__':
-    callsImpact()
+    callsClassifier()
