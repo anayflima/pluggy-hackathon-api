@@ -5,12 +5,15 @@ import os
 import json
 import datetime
 import dateutil.relativedelta
+import sys
+sys.path.insert(0, './models/')
+from solutionsClassifier import SolutionsClassifier
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 """
-    Como há dados, fornecidos pelo Open Finance, como dados de receita e financiamento,
+    Como há dados fornecidos pelo Open Finance, como dados de receita e financiamento,
     que não são fornecidos no sandbox da Pluggy, criamos algumas APIs, para uso nesse hackathon.
     Para fazê-las, utilizamos tanto materiais na internet sobre dados fornecidos pelo Open Finance,
     quanto os exemplos de retornos fornecidos pelas APIs da Pluggy (PRODUCTS em https://docs.pluggy.ai/docs/)
@@ -97,3 +100,13 @@ def getLoans(clientId):
     }
     
     return loansPayments
+
+@app.route("/classifier/clientId=<clientId>/accountId=<accountId>/itemId=<itemId>")
+def generateClientSolutionsClassifier(clientId, accountId, itemId):
+    clientSolutionsClassifier = SolutionsClassifier()
+
+    solutionsList = clientSolutionsClassifier.defineCustomerSolutionsPortfolio(clientId, accountId, itemId)
+    print("solutionsList")
+    print(solutionsList)
+
+    return solutionsList
