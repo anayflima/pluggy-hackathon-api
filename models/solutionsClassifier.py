@@ -105,8 +105,11 @@ class SolutionsClassifier:
 
         # Fazer diretório atual igual a diretório dos dados
         directory = os.getcwd()
-        os.chdir(directory+"/data")
-        directory = os.getcwd()
+        print(directory)
+        if "data" not in directory:
+            os.chdir(directory + "/data")
+            directory = os.getcwd()
+            print(directory)
         
         # importa e calcula métricas das soluções
         solutionsList = self.getSolutionsList("./solutionsList.csv")
