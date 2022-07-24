@@ -1,7 +1,7 @@
-Solução;CaixaSobreEBITDA;VolatilidadeDaReceita;Alavancagem
-Pegar credito para investir em expandir a base de clientes;1;1;1
-Pegar credito para investir em fidelizar e expandir base de clientes;1;3;1
-Evitar pegar credito, expandir base de clientes de forma barata;1;1;3
-Evitar pegar credito, fidelizar e expandir base de clientes de forma barata;1;3;3
-Investir caixa na expansao da base de clientes;3;1;1
-Investir caixa na fidelizacao da base de clientes;3;3;1
+Solução;CaixaSobreEBITDA;Alavancagem;VolatilidadeDaReceita
+Pegar credito para investir em expandir a base de clientes;0;0;0
+Pegar credito para investir em fidelizar e expandir base de clientes;0;0;1
+Evitar pegar credito, expandir base de clientes de forma barata;0;1;0
+Evitar pegar credito, fidelizar base de clientes de forma barata;0;1;1
+Investir caixa na expansao da base de clientes;1;0;0
+Investir caixa na fidelizacao da base de clientes;1;0;1
