@@ -54,16 +54,12 @@ class MetricsClassifier:
         """
             Quanto maior o nível de alavancagem de uma empresa, mais endividada ela está.
             Usaremos essa métrica para recomendação ou não de crédito para a empresa.
-            Consideraremos:
-            1 - empresas com alavancagem entre 0 e 3
-            2 - empresas com alavancagem entre 3 e 6
-            3 - empresas com alavancagem maior do que 6
-            Para normalizar de 0 a 1 e encontrar a posição no eixo dessa métrica, aplicaremos
-            a função 1/2 - 1, para mudar o range de 1 a 3 para 0 a 1. Ou seja:
-            0 - empresas com alavancagem entre 0 e 3
-            0.5 - empresas com alavancagem entre 3 e 6
-            1 - empresas com alavancagem maior do que 6
-
+            Consideraremos empresas com alavancagem maior do que 10 igual a 10, já que
+            apresentam uma alavancagem alta e o aumento dela acima desse número não
+            impactaria nas soluções proposta para a empresa, que é não pegar crédito
+            e focar em formas de expansão barata. Para normalizar de 0 a 1 e encontrar
+            a posição no eixo dessa métrica, aplicaremos a função 1/10, para mudar o
+            intervalo de 0 a 10 para 0 a 1.
             Se a empresa possuir alavancavem menor do que 0, significa que seu EBITDA é negativo
             ou então que a empresa possui mais caixa do que dívida.
             
@@ -75,14 +71,11 @@ class MetricsClassifier:
 
         print(leverage)
 
-        if (leverage < 0):
-            leveragePosition = 1
-        elif (leverage < 3):
-            leveragePosition = 0
-        elif (leverage < 6):
-            leveragePosition = 0.5
-        else:
-            leveragePosition = 1
-
+        if (leverage > 10):
+            leverage = 10
+        elif (leverage < 0):
+            leverage = 0
+        # normalizar de 0 a 10 para 0 a 1 (dividir por 10)
+        leveragePOsition = leverage/10
         
-        return leveragePosition
+        return leveragePOsition
