@@ -22,7 +22,7 @@ class MetricsClassifier:
         else:
             return 0
     
-    def calculateCashOnEBITDAPosition(self, accountId, itemId):
+    def calculateCashOnEBITDAPosition(self, accountId, itemId, clientSecret, clientId):
         """
             Quanto maior a proporção de caixa em relação ao EBITDA, mais dinheiro a
             empresa tem disponível em relação ao seus lucros. Com base nisso,
@@ -37,7 +37,7 @@ class MetricsClassifier:
 
         clientMetrics = Metrics()
 
-        cashOnEBITDA = clientMetrics.calculateCashOnEBITDA(accountId, itemId)
+        cashOnEBITDA = clientMetrics.calculateCashOnEBITDA(accountId, itemId, clientSecret, clientId)
 
         print("cashOnEBITDA")
         print(cashOnEBITDA)
@@ -50,7 +50,7 @@ class MetricsClassifier:
         
         return cashOnEBITDAPosition
 
-    def calculateIncomeVolatilityPosition(self, accountId):
+    def calculateIncomeVolatilityPosition(self, accountId, clientSecret, clientId):
         """
             Quanto maior a volatilidade de receita da empresa, menor é a previsibilidade
             de receita da empresa. Como a função calculateIncomeVolatility já nos retorna
@@ -61,14 +61,14 @@ class MetricsClassifier:
 
         clientMetrics = Metrics()
 
-        incomeVolatility = clientMetrics.calculateIncomeVolatility(accountId)
+        incomeVolatility = clientMetrics.calculateIncomeVolatility(accountId, clientSecret, clientId)
 
         print("incomeVolatility")
         print(incomeVolatility)
         
         return incomeVolatility
     
-    def calculateLeveragePosition(self, clientId, accountId):
+    def calculateLeveragePosition(self, clientId, accountId, clientSecret):
         """
             Quanto maior o nível de alavancagem de uma empresa, mais endividada ela está.
             Usaremos essa métrica para recomendação ou não de crédito para a empresa.
@@ -85,7 +85,7 @@ class MetricsClassifier:
 
         clientMetrics = Metrics()
 
-        leverage = clientMetrics.calculateLeverave(clientId, accountId)
+        leverage = clientMetrics.calculateLeverave(clientId, accountId, clientSecret)
 
         print("leverage")
         print(leverage)
@@ -93,7 +93,7 @@ class MetricsClassifier:
         if (leverage > 10):
             leverage = 10
         elif (leverage < 0):
-            clientTransactions = Transactions()
+            clientTransactions = Transactions(clientSecret, clientId)
 
             EBITDA = clientTransactions.getEBITDA(accountId)
             if (EBITDA < 0):
