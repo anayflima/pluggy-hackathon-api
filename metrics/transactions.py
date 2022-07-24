@@ -8,6 +8,10 @@ from metrics.dataCollector import DataCollector
 class Transactions(DataCollector):
 
     def getCash(self, itemId):
+        """
+            Função retorna o valor, em dinheiro, que a companhia tem em sua conta.
+            Valor obtido por meio de chamada de API da Pluggy
+        """
         requestUrl = self.pluggyUrl + "accounts?itemId={itemId}".format(itemId = itemId)
 
         payload = ""
@@ -26,6 +30,10 @@ class Transactions(DataCollector):
         return balance
     
     def getTransactions(self, accountId):
+        """
+            Função retorna todas as transações de determinada conta de um cliente,
+            por meio de chamada de API da Pluggy
+        """
         requestUrl = self.pluggyUrl + "transactions?accountId={accountId}".format(accountId = accountId)
 
         payload = ""
@@ -44,8 +52,6 @@ class Transactions(DataCollector):
         """
 
         responseJson = self.getTransactions(accountId)
-
-        # print(responseJson)
 
         now = datetime.now()
 
@@ -77,7 +83,11 @@ class Transactions(DataCollector):
 
         return sumPositiveTransactions
 
-    def getTotalMonthlyTransactions(self, accountId):
+    def getTotalLastMonthTransactions(self, accountId):
+        """
+            Função retorna todas as transações de determinada conta de um cliente
+            feitas no último mês (transações de um més atrás para frente)
+        """
 
         responseJson = self.getTransactions(accountId)
 
@@ -91,12 +101,19 @@ class Transactions(DataCollector):
             transactionDate= item['date']
             transactionDateObject = datetime.strptime(transactionDate, '%Y-%m-%dT%H:%M:%S.000Z')
 
-            if (transactionDateObject > dateAMonthAgo): # se a transação foi de um mês atrás para frente
+            # se a transação foi de um mês atrás para frente
+            if (transactionDateObject > dateAMonthAgo):
                 sumTransactions += item['amount']
         
         return sumTransactions
     
     def getPositiveTransactionsByMonth(self, accountId):
+        """
+            Função retorna todas as transações positivas do último ano
+            de determinada conta de um cliente separadas por mês.
+            O formato de devolução é um dicionário cujas chaves
+            são os meses e os valores o total de transações naquele mês
+        """
         responseJson = self.getTransactions(accountId)
         now = datetime.now()
 
@@ -104,15 +121,13 @@ class Transactions(DataCollector):
 
         transactionsByMonth = {}
 
-        # print(responseJson)
-
         for item in responseJson['results']:
             transactionDate = item['date']
             transactionAmount = item['amount']
             transactionDateObject = datetime.strptime(transactionDate, '%Y-%m-%dT%H:%M:%S.000Z')
-            # se a transação é positiva e se foi de um ano atrás para frente
+
+            # se a transação é positiva e se foi de um ano atrás para frente, separar por mês
             if (abs(transactionAmount) > 0 and transactionDateObject > dateAYearAgo):
-                # separar por mês
                 month = str(transactionDateObject.month)
                 if month in transactionsByMonth:
                     transactionsByMonth[month] += transactionAmount
