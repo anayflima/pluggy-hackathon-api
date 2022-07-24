@@ -1,6 +1,7 @@
 import sys
 import os
 from metrics.metrics import Metrics
+from metrics.transactions import Transactions
 import pandas as pd
 import numpy as np
 import requests
@@ -11,7 +12,15 @@ class MetricsClassifier:
     def __init__(self):
         pass
     def calculateSigmoid(self, x):
-        return 1/(1+np.exp(-(1/x)))
+        """
+            Aplica e retorna a função sigmóide para valores positivos.
+            Para valores negativos, devolve zero, já que estamos normalizando
+            a variável de 0 a 1.
+        """
+        if (x > 0):
+            return 1/(1+np.exp(-(1/x)))
+        else:
+            return 0
     
     def calculateCashOnEBITDAPosition(self, accountId, itemId):
         """
@@ -29,9 +38,15 @@ class MetricsClassifier:
         clientMetrics = Metrics()
 
         cashOnEBITDA = clientMetrics.calculateCashOnEBITDA(accountId, itemId)
+
+        print("cashOnEBITDA")
+        print(cashOnEBITDA)
   
         # cashOnEBITDAPosition = (self.calculateSigmoid(cashOnEBITDA)-0.5)*2    
         cashOnEBITDAPosition = self.calculateSigmoid(cashOnEBITDA)
+
+        print("cashOnEBITDAPosition")
+        print(cashOnEBITDAPosition)
         
         return cashOnEBITDAPosition
 
@@ -47,6 +62,9 @@ class MetricsClassifier:
         clientMetrics = Metrics()
 
         incomeVolatility = clientMetrics.calculateIncomeVolatility(accountId)
+
+        print("incomeVolatility")
+        print(incomeVolatility)
         
         return incomeVolatility
     
@@ -69,13 +87,35 @@ class MetricsClassifier:
 
         leverage = clientMetrics.calculateLeverave(clientId, accountId)
 
+        print("leverage")
         print(leverage)
 
         if (leverage > 10):
             leverage = 10
         elif (leverage < 0):
-            leverage = 0
-        # normalizar de 0 a 10 para 0 a 1 (dividir por 10)
-        leveragePOsition = leverage/10
+            clientTransactions = Transactions()
+
+            EBITDA = clientTransactions.getEBITDA(accountId)
+            if (EBITDA < 0):
+                """
+                    Alavancagem deu negativa por causa do EBITDA negativo.
+                    Lucro é negativo e empresa está individida. Assim,
+                    classificaremos essa empresa como tendo alta alavancagem.
+                """
+                leverage = 10
+            else:
+                """
+                    O motivo de a alavancagem estar negativa é devido
+                    à empresa possuir mais caixa do que dívida. Assim, podemos
+                    classificar a empresa como tendo baixa alavancagem.
+                """
+                leverage = 0
         
-        return leveragePOsition
+        # normalizar de 0 a 10 para 0 a 1 (dividir por 10)
+
+        leveragePosition = leverage/10
+
+        print("leveragePosition")
+        print(leveragePosition)
+        
+        return leveragePosition
