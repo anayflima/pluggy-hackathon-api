@@ -17,11 +17,14 @@ A API principal recebe como parâmetros a clientSecret, clientId, accountId e it
 
 [https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=<clientSecret>/clientId=<clientId>/accountId=<accountId>/itemId=<itemId>](https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=2c61a2ee-eca2-4d69-8891-060ec0fd76cd/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7)
 
-$ https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=2c61a2ee-eca2-4d69-8891-060ec0fd76cd/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7
+```
+https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=2c61a2ee-eca2-4d69-8891-060ec0fd76cd/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7
+```
 
 ##### Exemplo de saída:
+
 ```json
-$ {"page":1,"results":[{"amount":235,"currencyCode":"BRL","id":"d3434-2343-7878-a4534-032h72343423k","paymentDate":"2022-06-13T03:00:00.000Z"},{"amount":572,"currencyCode":"BRL","id":"d45gf-dfg43-7845678-d675-so83n9ds9","paymentDate":"2022-07-13T03:00:00.000Z"},{"amount":1235,"currencyCode":"BRL","id":"aa3f2f-fhhy345-dfh34234-4563g-sdf872jn","paymentDate":"2022-08-13T03:00:00.000Z"},{"amount":835,"currencyCode":"BRL","id":"aa3f2f-fhhy345-dfh34234-4563g-sdf872jn","paymentDate":"2022-09-13T03:00:00.000Z"}],"total":2,"totalPages":1}
+{"page":1,"results":[{"amount":235,"currencyCode":"BRL","id":"d3434-2343-7878-a4534-032h72343423k","paymentDate":"2022-06-13T03:00:00.000Z"},{"amount":572,"currencyCode":"BRL","id":"d45gf-dfg43-7845678-d675-so83n9ds9","paymentDate":"2022-07-13T03:00:00.000Z"},{"amount":1235,"currencyCode":"BRL","id":"aa3f2f-fhhy345-dfh34234-4563g-sdf872jn","paymentDate":"2022-08-13T03:00:00.000Z"},{"amount":835,"currencyCode":"BRL","id":"aa3f2f-fhhy345-dfh34234-4563g-sdf872jn","paymentDate":"2022-09-13T03:00:00.000Z"}],"total":2,"totalPages":1}
 ```
 
 ### Algoritmo utilizado
