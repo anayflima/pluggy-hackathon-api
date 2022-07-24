@@ -15,13 +15,6 @@ class SolutionsClassifier:
     def getSolutionsList(self, file):
         return pd.read_csv(file, sep = ';')
     
-    def transformRangeTo0a1(self, x):
-        """
-            Transforma valor recebido do intervalo 1-3
-            para intervalo 0-1, usando transformação de função
-        """
-        return 1/2*x-1
-    
     def calculateSolutionsMetrics(self, solutionsList):
         solutionsMetrics = []
         for i in range(len(solutionsList)):
@@ -32,9 +25,9 @@ class SolutionsClassifier:
             incomeVolatility = int(solutionsList.iloc[i]['VolatilidadeDaReceita'])
             # normalizar e colocar em um dicionário da solução
             solutionMetrics['solution'] = solutionsList.iloc[i]['Solução']
-            solutionMetrics['cashOnEBITDA'] = self.transformRangeTo0a1(cashOnEBITDA)
-            solutionMetrics['leverage'] = self.transformRangeTo0a1(leverage)
-            solutionMetrics['incomeVolatility'] = self.transformRangeTo0a1(incomeVolatility)
+            solutionMetrics['cashOnEBITDA'] = cashOnEBITDA
+            solutionMetrics['leverage'] = leverage
+            solutionMetrics['incomeVolatility'] = incomeVolatility
 
             solutionsMetrics.append(solutionMetrics)
         return solutionsMetrics
@@ -48,7 +41,10 @@ class SolutionsClassifier:
         }
         return profile
 
-    def calculateEuclideanDistance3D(self, xa, ya, xb, yb, za, zb):
+    def calculateEuclideanDistance3D(self, xa, ya, za, xb, yb, zb):
+        """
+            Calcula a distância entre dois pontos
+        """
         return math.sqrt((xa-xb)**2 + (ya-yb)**2 + (za-zb)**2)
 
     def findBestSolutions(self, client, solutionsMetrics):
@@ -72,14 +68,14 @@ class SolutionsClassifier:
 
             solutionsInformation = {
                 'solution': solution['solution'],
-                'distance': euclideanDistance,
+                'euclideanDistance': euclideanDistance,
                 # 'leverage':solution['leverage'],
                 # 'cashProfile': solution['cashOnEBITDA'],
                 # 'incomeVolatility': solution['incomeVolatility'],
             }
             solutions.append(solutionsInformation)
         
-        k = 5
+        k = 4
         bestSolutionsDistance = dict(sorted(distancesSolutionsClients.items(), key = itemgetter(1))[:k])
         bestSolutions = []
         for solution in solutions:
@@ -91,9 +87,19 @@ class SolutionsClassifier:
     
     def createSolutionsPortfolio(self, bestSolutions):
         distancesSum = 0
+        # normaliza os dados (coloca no intervalo 0 e 1)
+
+        positions = []
         for solution in bestSolutions:
-            position = 1 - solution['distance']
-            solution['impact'] = position
+            position = 1/(3*solution['euclideanDistance'])
+            positions.append(position)
+            
+        for i in range(len(bestSolutions)):
+            position = positions[i]
+            normalizedPosition = (position - min(positions)) / (max(positions)-min(positions))
+            bestSolutions[i]['positiveImpact'] = normalizedPosition
+        
+        # solution['positiveImpact'] = position
         
         return bestSolutions
 
