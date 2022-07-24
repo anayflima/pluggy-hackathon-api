@@ -2,7 +2,7 @@ import sys
 import subprocess
 
 # implement pip as a subprocess:
-subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'Flask'])
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'Flask==1.1.2'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'requests'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pandas'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'numpy'])

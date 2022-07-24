@@ -1,11 +1,12 @@
 import numpy as np
 import requests
+import os
 from datetime import date, datetime
 import json
 import dateutil.relativedelta
-from dataCollector import DataCollector
-from transactions import Transactions
-from debts import Debts
+from metrics.dataCollector import DataCollector
+from metrics.transactions import Transactions
+from metrics.debts import Debts
 
 class Metrics():
     

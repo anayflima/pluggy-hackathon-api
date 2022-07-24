@@ -3,7 +3,7 @@ import requests
 from datetime import date, datetime
 import json
 import dateutil.relativedelta
-from dataCollector import DataCollector
+from metrics.dataCollector import DataCollector
 
 class Transactions(DataCollector):
 

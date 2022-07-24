@@ -1,6 +1,6 @@
 import sys
-sys.path.insert(0, './')
-from metrics import Metrics
+import os
+from metrics.metrics import Metrics
 import pandas as pd
 import numpy as np
 import requests

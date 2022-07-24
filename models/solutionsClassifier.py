@@ -1,7 +1,6 @@
 import sys
 from metricsClassifier import MetricsClassifier
-sys.path.insert(0, '../metrics')
-from metrics import Metrics
+from metrics.metrics import Metrics
 sys.path.insert(0, '../data')
 import pandas as pd
 import requests
