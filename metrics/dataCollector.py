@@ -10,12 +10,17 @@ class DataCollector():
     
     def __init__(self):
         self.setAPIKey(self.getAPIKey(self.clientId, self.clientSecret))
-        # print(self.APIKey)
 
     def setAPIKey(self,APIKey):
+        """
+            Função atribui valor recebido para atributo APIKey
+        """
         self.APIKey = APIKey
     
     def getAPIKey(self, clientId, clientSecret):
+        """
+            Função obtém API Key do cliente por chamada de API da Pluggy
+        """
         requestUrl = self.pluggyUrl + "auth"
 
         payload = json.dumps({
