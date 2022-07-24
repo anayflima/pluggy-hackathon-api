@@ -17,10 +17,11 @@ class Metrics():
         """
 
         clientTransactions = Transactions()
+        
         cash = clientTransactions.getCash(itemId)
-        # print("cash = " + str(cash))
+
         EBITDA = clientTransactions.getEBITDA(accountId)
-        # print("EBITDA = " + str(EBITDA))
+
         cashOnEBITDA = cash/EBITDA
         return cashOnEBITDA
     
@@ -35,8 +36,6 @@ class Metrics():
         positiveTransactionsByMonth = clientTransactions.getPositiveTransactionsByMonth(accountId)
 
         montlyIncomesList = list(positiveTransactionsByMonth.values())
-
-        # print(montlyIncomesList)
 
         absoluteAverageMontlyIncomes = abs(sum(montlyIncomesList) / len(montlyIncomesList))
 
@@ -58,17 +57,11 @@ class Metrics():
 
         EBITDA = clientTransactions.getEBITDA(accountId)
 
-        # print(EBITDA)
-
         grossDebt = clientDebts.calculateGrossDebt(clientId)
-
-        # print(grossDebt)
 
         cash = clientTransactions.getCash(clientId)
         
         netDebt = grossDebt - cash
-
-        # print(netDebt)
 
         leverage = netDebt / EBITDA
 
