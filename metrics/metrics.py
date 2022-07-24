@@ -3,7 +3,6 @@ import requests
 from datetime import date, datetime
 import json
 import dateutil.relativedelta
-import data
 from dataCollector import DataCollector
 from transactions import Transactions
 from debts import Debts
@@ -28,6 +27,8 @@ class Metrics():
         """
             Função calcula a volatilidade da receita do último ano da empresa.
             Com isso, queremos obter uma estimativa de se a empresa possui ou não receita recorrente.
+            Para podermos comparar soluções, usaremos o coeficiente de variação (uma espécie de
+            "desvio padrão relativo", que é obtido dividindo o desvio padrão absoluto pela média dos valores.
         """
         clientTransactions = Transactions()
         positiveTransactionsByMonth = clientTransactions.getPositiveTransactionsByMonth(accountId)
@@ -36,8 +37,13 @@ class Metrics():
 
         # print(montlyIncomesList)
 
-        standartDeviation = np.std(montlyIncomesList)
-        return standartDeviation
+        absoluteAverageMontlyIncomes = abs(sum(montlyIncomesList) / len(montlyIncomesList))
+
+        standartDeviationMontlyIncomes = np.std(montlyIncomesList)
+
+        coefficientOfVariation = standartDeviationMontlyIncomes / absoluteAverageMontlyIncomes
+
+        return coefficientOfVariation
     
     def calculateLeverave(self, clientId, accountId):
         """
