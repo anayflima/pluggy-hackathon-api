@@ -4,7 +4,7 @@ import requests
 class DataCollector():
     APIKey = ""
     pluggyUrl = "https://api.pluggy.ai/"
-    hackathonPluggyUrl = "http://localhost:5000/"
+    hackathonPluggyUrl = "https://pluggy-demeter-api.herokuapp.com/"
     clientId = "a8935a1f-a204-40de-bd86-eed00f433887"
     clientSecret = "2c61a2ee-eca2-4d69-8891-060ec0fd76cd"
     
