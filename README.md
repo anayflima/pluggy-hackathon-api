@@ -34,7 +34,7 @@ Esse repositório recebe dados das APIs fornecida pelo sandbox da Pluggy:
 
 No entanto, alguns dados de Open Finance não são fornecidos por esse sandbox. Assim, como forma de complementação, foram feitas APIs para simular o retorno dos dados faltantes. Essas APIs fornecem dados de financiamentos e empréstimos do cliente.
 
-##### Exemplos de uso das APIs criadas:
+#### Exemplos de uso das APIs criadas:
 
 - [https://pluggy-demeter-api.herokuapp.com/financings/{clientId}](https://pluggy-demeter-api.herokuapp.com/financings/a8935a1f-a204-40de-bd86-eed00f433887)
 - [https://pluggy-demeter-api.herokuapp.com/loans/{clientId}](https://pluggy-demeter-api.herokuapp.com/loans/a8935a1f-a204-40de-bd86-eed00f433887)
@@ -49,6 +49,6 @@ Em segundo lugar, com os dados de uma determinada empresa fornecidos por APIs do
 
 O tratamento dos dados e a devolução dos insights é feita pelo método [generateClientSolutionsClassifier](https://github.com/anayflima/pluggy-hackathon-api/blob/main/app.py#L104) desse servidor. Ele recebe o clientId, accountId e itemId da companhia e devolve uma lista das soluções mais adequadas para ela. Essas soluções são encontradas considerando que as 3 métricas formam um espaço 3D, cada uma representando um dos eixos. Assim, tendo a posição do cliente e das soluções nesse espaço, calculamos a distância euclideana entre o cliente e cada uma das soluções e escolhemos as k soluções mais próximas como insights. Tal algoritmo foi baseado no modelo de machine learning [K-Nearest Neighbors](https://www.baeldung.com/cs/k-nearest-neighbors#k-nearest-neighbors). Além disso, o método devolve o quão forte aquela solução é indicada para um usuário, sendo isso inversamente proporcional à distância do cliente àquela solução.
 
-##### Exemplo de uso do método generateClientSolutionsClassifier:
+#### Exemplo de uso do método generateClientSolutionsClassifier:
 
 [https://pluggy-demeter-api.herokuapp.com/classifier/clientId={clientId}/accountId={accountId}/itemId={itemId}](https://pluggy-demeter-api.herokuapp.com/classifier/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7)
