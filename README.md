@@ -15,7 +15,7 @@ A API principal recebe como parâmetros a clientSecret, clientId, accountId e it
 
 ##### Exemplo de execução:
 
-[https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=<clientSecret>/clientId=<clientId>/accountId=<accountId>/itemId=<itemId>](https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=2c61a2ee-eca2-4d69-8891-060ec0fd76cd/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7)
+[https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret={clientSecret}/clientId={clientId}/accountId={accountId}/itemId={itemId}](https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=2c61a2ee-eca2-4d69-8891-060ec0fd76cd/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7)
 
 ```
 https://pluggy-demeter-api.herokuapp.com/classifier/clientSecret=2c61a2ee-eca2-4d69-8891-060ec0fd76cd/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7
@@ -36,8 +36,8 @@ No entanto, alguns dados de Open Finance não são fornecidos por esse sandbox. 
 
 ##### Exemplos de uso das APIs criadas:
 
-- [https://pluggy-demeter-api.herokuapp.com/financings/<clientId>](https://pluggy-demeter-api.herokuapp.com/financings/a8935a1f-a204-40de-bd86-eed00f433887)
-- [https://pluggy-demeter-api.herokuapp.com/loans/<clientId>](https://pluggy-demeter-api.herokuapp.com/loans/a8935a1f-a204-40de-bd86-eed00f433887)
+- [https://pluggy-demeter-api.herokuapp.com/financings/{clientId}](https://pluggy-demeter-api.herokuapp.com/financings/a8935a1f-a204-40de-bd86-eed00f433887)
+- [https://pluggy-demeter-api.herokuapp.com/loans/{clientId}](https://pluggy-demeter-api.herokuapp.com/loans/a8935a1f-a204-40de-bd86-eed00f433887)
 
 #### Descrição
 
@@ -51,4 +51,4 @@ O tratamento dos dados e a devolução dos insights é feita pelo método [gener
 
 ##### Exemplo de uso do método generateClientSolutionsClassifier:
 
-[https://pluggy-demeter-api.herokuapp.com/classifier/clientId=<clientId>/accountId=<accountId>/itemId=<itemId>](https://pluggy-demeter-api.herokuapp.com/classifier/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7)
+[https://pluggy-demeter-api.herokuapp.com/classifier/clientId={clientId}/accountId={accountId}/itemId={itemId}](https://pluggy-demeter-api.herokuapp.com/classifier/clientId=a8935a1f-a204-40de-bd86-eed00f433887/accountId=4d4f622a-38d6-4991-b340-387492fd22c8/itemId=a4ac3258-e88f-4123-8dc4-a4f72c3da7a7)
