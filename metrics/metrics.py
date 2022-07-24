@@ -10,7 +10,7 @@ from metrics.debts import Debts
 
 class Metrics():
     
-    def calculateCashOnEBITDA(self, accountId, itemId):
+    def calculateCashOnEBITDA(self, accountId, itemId, clientSecret, clientId):
         """
             Função calcula a razão entre caixa da empresa e EBITDA
             Com isso, queremos obter uma estimativa de se a empresa possui ou não receita recorrente.
@@ -25,7 +25,7 @@ class Metrics():
             mais próximas de soluções que possuem baixo caixa e lucro.
         """
 
-        clientTransactions = Transactions()
+        clientTransactions = Transactions(clientSecret, clientId)
         
         cash = clientTransactions.getCash(itemId)
 
@@ -41,14 +41,14 @@ class Metrics():
         cashOnEBITDA = cash/EBITDA
         return cashOnEBITDA
     
-    def calculateIncomeVolatility(self, accountId):
+    def calculateIncomeVolatility(self, accountId, clientSecret, clientId):
         """
             Função calcula a volatilidade da receita do último ano da empresa.
             Com isso, queremos obter uma estimativa de se a empresa possui ou não receita recorrente.
             Para podermos comparar soluções, usaremos o coeficiente de variação (uma espécie de
             "desvio padrão relativo", que é obtido dividindo o desvio padrão absoluto pela média dos valores.
         """
-        clientTransactions = Transactions()
+        clientTransactions = Transactions(clientSecret, clientId)
         positiveTransactionsByMonth = clientTransactions.getPositiveTransactionsByMonth(accountId)
 
         montlyIncomesList = list(positiveTransactionsByMonth.values())
@@ -61,15 +61,15 @@ class Metrics():
 
         return coefficientOfVariation
     
-    def calculateLeverave(self, clientId, accountId):
+    def calculateLeverave(self, clientId, accountId, clientSecret):
         """
             Função calcula a alavancagem da empresa, usando a seguinte fórmula:
             Alavancagem = (dívida líquida) / EBITDA = (dívida bruta - caixa) / EBITDA,
             sendo EBITDA a soma das transações positivas (o que entrou)
             e as transações negativas (o que saiu).
         """
-        clientTransactions = Transactions()
-        clientDebts = Debts()
+        clientTransactions = Transactions(clientSecret, clientId)
+        clientDebts = Debts(clientSecret, clientId)
 
         EBITDA = clientTransactions.getEBITDA(accountId)
 

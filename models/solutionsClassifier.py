@@ -32,12 +32,12 @@ class SolutionsClassifier:
             solutionsMetrics.append(solutionMetrics)
         return solutionsMetrics
 
-    def defineClientProfile(self, clientId, accountId, itemId):
+    def defineClientProfile(self, clientId, accountId, itemId, clientSecret):
         clientMetricsClassifier = MetricsClassifier()
         profile = {
-            'cashOnEBITDA': clientMetricsClassifier.calculateCashOnEBITDAPosition(accountId, itemId),
-            'incomeVolatility': clientMetricsClassifier.calculateIncomeVolatilityPosition(accountId),
-            'leverage': clientMetricsClassifier.calculateLeveragePosition(clientId, accountId),
+            'cashOnEBITDA': clientMetricsClassifier.calculateCashOnEBITDAPosition(accountId, itemId, clientSecret, clientId),
+            'incomeVolatility': clientMetricsClassifier.calculateIncomeVolatilityPosition(accountId, clientSecret, clientId),
+            'leverage': clientMetricsClassifier.calculateLeveragePosition(clientId, accountId, clientSecret),
         }
         return profile
 
@@ -104,9 +104,9 @@ class SolutionsClassifier:
         return bestSolutions
 
 
-    def defineCustomerSolutionsPortfolio(self, clientId, accountId, itemId):
+    def defineCustomerSolutionsPortfolio(self, clientSecret, clientId, accountId, itemId):
         # define perfil do cliente
-        clientProfile = self.defineClientProfile(clientId, accountId, itemId)
+        clientProfile = self.defineClientProfile(clientId, accountId, itemId, clientSecret)
 
 
         # Fazer diretório atual igual a diretório dos dados

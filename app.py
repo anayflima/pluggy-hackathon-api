@@ -7,7 +7,10 @@ import datetime
 import dateutil.relativedelta
 import sys
 sys.path.insert(0, './models/')
-from solutionsClassifier import SolutionsClassifier
+from models.solutionsClassifier import SolutionsClassifier
+sys.path.insert(0, './metrics/')
+from metrics.dataCollector import DataCollector
+from metrics.transactions import Transactions
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -101,11 +104,24 @@ def getLoans(clientId):
     
     return loansPayments
 
-@app.route("/classifier/clientId=<clientId>/accountId=<accountId>/itemId=<itemId>")
-def generateClientSolutionsClassifier(clientId, accountId, itemId):
+
+@app.route("/classifier/clientSecret=<clientSecret>/clientId=<clientId>/accountId=<accountId>/itemId=<itemId>")
+def generateClientSolutionsClassifier(clientSecret, clientId, accountId, itemId):
+    '''
+        Função principal da API. Recebe dados de Ids do cliente e retorna as possíveis soluções.
+        Para mais detalhes sobre a implementação, veja o método defineCustomerSolutionsPortfolio
+        da classe SolutionsClassifier, que é chamado por essa função.
+    '''
+
     clientSolutionsClassifier = SolutionsClassifier()
 
-    solutionsList = clientSolutionsClassifier.defineCustomerSolutionsPortfolio(clientId, accountId, itemId)
+    dataCollector = DataCollector(clientSecret, clientId)
+
+    clientTransactions = Transactions(clientSecret, clientId)
+
+    print(clientTransactions.clientSecret)
+
+    solutionsList = clientSolutionsClassifier.defineCustomerSolutionsPortfolio(clientSecret, clientId, accountId, itemId)
     print("solutionsList")
     print(solutionsList)
 

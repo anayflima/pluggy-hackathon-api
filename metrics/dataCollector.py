@@ -5,11 +5,25 @@ class DataCollector():
     APIKey = ""
     pluggyUrl = "https://api.pluggy.ai/"
     hackathonPluggyUrl = "https://pluggy-demeter-api.herokuapp.com/"
-    clientId = "a8935a1f-a204-40de-bd86-eed00f433887"
-    clientSecret = "2c61a2ee-eca2-4d69-8891-060ec0fd76cd"
+    clientId = ""
+    clientSecret = ""
     
-    def __init__(self):
+    def __init__(self, clientSecret, clientId):
+        self.setClientSecret(clientSecret)
+        self.setClientId(clientId)
         self.setAPIKey(self.getAPIKey(self.clientId, self.clientSecret))
+    
+    def setClientId(self, clientId):
+        """
+            Função atribui valor recebido para atributo clientSecret
+        """
+        self.clientId = clientId
+    
+    def setClientSecret(self, clientSecret):
+        """
+            Função atribui valor recebido para atributo clientSecret
+        """
+        self.clientSecret = clientSecret
 
     def setAPIKey(self,APIKey):
         """
